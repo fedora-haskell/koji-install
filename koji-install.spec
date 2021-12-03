@@ -6,7 +6,7 @@
 %bcond_with tests
 
 Name:           koji-install
-Version:        0.2.0
+Version:        0.3
 Release:        0.1%{?dist}
 Summary:        CLI tool for installing rpms directly from Fedora Koji
 
@@ -27,7 +27,6 @@ BuildRequires:  ghc-extra-static
 BuildRequires:  ghc-filepath-static
 %if 0%{?fedora}
 BuildRequires:  ghc-koji-static
-BuildRequires:  ghc-optparse-applicative-static
 BuildRequires:  ghc-rpm-nvr-static
 BuildRequires:  ghc-simple-cmd-static
 BuildRequires:  ghc-simple-cmd-args-static
@@ -102,6 +101,12 @@ mkdir -p %{buildroot}%{_datadir}/bash-completion/completions/
 
 
 %changelog
+* Fri Dec  3 2021 Jens Petersen <petersen@redhat.com> - 0.3-0.1
+- add `--list` command to list recent builds
+- fix bug in generating kojifiles url from short name
+- workarounds for rpmfusion's older koji not supporting patterns
+- check if %dist is defined
+
 * Fri Dec  3 2021 Jens Petersen <petersen@redhat.com> - 0.2.0-0.1
 - 0.2.0
 
