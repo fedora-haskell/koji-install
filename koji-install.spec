@@ -36,9 +36,9 @@ BuildRequires:  ghc-simple-cmd-static
 BuildRequires:  ghc-simple-cmd-args-static
 BuildRequires:  ghc-xdg-userdirs-static
 %endif
+BuildRequires:  cabal-install > 1.18
 %if %{defined rhel}
 BuildRequires:  ghc-devel
-BuildRequires:  cabal-install > 1.18
 BuildRequires:  openssl-devel
 BuildRequires:  zlib-devel
 %endif
@@ -58,10 +58,12 @@ but there are options to list and select other packages.
 
 %build
 # Begin cabal-rpm build:
-%if %{defined fedora}
-%ghc_bin_build
-%else
 cabal update
+%if %{defined fedora}
+# need http-directory-0.1.9
+#%%ghc_bin_build
+cabal build
+%else
 %if 0%{?rhel} && 0%{?rhel} < 9
 cabal sandbox init
 cabal install
@@ -72,10 +74,11 @@ cabal install
 
 %install
 # Begin cabal-rpm install
-%if %{defined fedora}
-%ghc_bin_install
-%else
 mkdir -p %{buildroot}%{_bindir}
+%if %{defined fedora}
+#%%ghc_bin_install
+strip -s -o %{buildroot}%{_bindir}/%{name} dist-newstyle/build/*/ghc-*/%{name}-%{version}/x/%{name}/build/%{name}/%{name}
+%else
 %if 0%{?fedora} >= 33 || 0%{?rhel} > 8
 cabal install --install-method=copy --installdir=%{buildroot}%{_bindir}
 %else
