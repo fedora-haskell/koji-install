@@ -6,8 +6,8 @@
 %bcond_with tests
 
 Name:           koji-install
-Version:        0.3
-Release:        0.1%{?dist}
+Version:        0.4
+Release:        1%{?dist}
 Summary:        CLI tool for installing rpms directly from Fedora Koji
 
 License:        BSD
@@ -19,6 +19,9 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 # Begin cabal-rpm deps:
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-rpm-macros
+%if 0%{?fedora}
+BuildRequires:  ghc-Glob-static
+%endif
 BuildRequires:  ghc-base-static
 BuildRequires:  ghc-directory-static
 %if 0%{?fedora}
@@ -26,6 +29,7 @@ BuildRequires:  ghc-extra-static
 %endif
 BuildRequires:  ghc-filepath-static
 %if 0%{?fedora}
+BuildRequires:  ghc-http-directory-static
 BuildRequires:  ghc-koji-static
 BuildRequires:  ghc-rpm-nvr-static
 BuildRequires:  ghc-simple-cmd-static
@@ -41,9 +45,9 @@ BuildRequires:  zlib-devel
 # End cabal-rpm deps
 
 %description
-koji-install can install the latest koji build of a package locally.
-By default it only downloads newer binaries of the subpackages
-already installed, but there are options to override that.
+koji-install can install a koji build/task of a package locally.
+By default it only downloads newer binaries of already installed subpackages,
+but there are options to list and select other packages.
 
 
 %prep
@@ -101,6 +105,15 @@ mkdir -p %{buildroot}%{_datadir}/bash-completion/completions/
 
 
 %changelog
+* Tue Dec 21 2021 Jens Petersen <petersen@redhat.com> - 0.4-1
+- support installing/listing by koji taskid
+- select subpackages with --package and --exclude, by name or globbing
+- check remote files date/size with http-directory
+- listing a task either lists the task's children or rpms
+- use dnf reinstall for installed packages and otherwise localinstall
+- more detailed debug output
+- system arch no longer hardcoded to x86_64
+
 * Fri Dec  3 2021 Jens Petersen <petersen@redhat.com> - 0.3-0.1
 - add `--list` command to list recent builds
 - fix bug in generating kojifiles url from short name
