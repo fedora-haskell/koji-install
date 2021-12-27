@@ -22,12 +22,12 @@ BuildRequires:  ghc-rpm-macros
 %if 0%{?fedora}
 BuildRequires:  ghc-Glob-static
 %endif
-BuildRequires:  ghc-base-static
-BuildRequires:  ghc-directory-static
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-directory-devel
 %if 0%{?fedora}
 BuildRequires:  ghc-extra-static
 %endif
-BuildRequires:  ghc-filepath-static
+BuildRequires:  ghc-filepath-devel
 %if 0%{?fedora}
 BuildRequires:  ghc-http-directory-static
 BuildRequires:  ghc-koji-static
