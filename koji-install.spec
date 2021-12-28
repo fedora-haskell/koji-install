@@ -6,7 +6,7 @@
 %bcond_with tests
 
 Name:           koji-install
-Version:        0.4
+Version:        0.5
 Release:        1%{?dist}
 Summary:        CLI tool for installing rpms directly from Fedora Koji
 
@@ -45,9 +45,8 @@ BuildRequires:  zlib-devel
 # End cabal-rpm deps
 
 %description
-koji-install can install a koji build/task of a package locally.
-By default it only downloads newer binaries of already installed subpackages,
-but there are options to list and select other packages.
+Koji-install can install a koji build/task of a package locally.
+Koji is the RPM-based buildsystem of Fedora Linux and CentOS.
 
 
 %prep
@@ -108,6 +107,11 @@ mkdir -p %{buildroot}%{_datadir}/bash-completion/completions/
 
 
 %changelog
+* Tue Dec 28 2021 Jens Petersen <petersen@redhat.com> - 0.5-1
+- '--package' and '--exclude' filters can now be combined
+- '--package' and '--exclude' now also check subpackage names without
+  the base prefix
+
 * Tue Dec 21 2021 Jens Petersen <petersen@redhat.com> - 0.4-1
 - support installing/listing by koji taskid
 - select subpackages with --package and --exclude, by name or globbing
