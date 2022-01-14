@@ -74,7 +74,7 @@ cabal install
 # Begin cabal-rpm install
 mkdir -p %{buildroot}%{_bindir}
 %if 0%{?fedora} >= 33 || 0%{?rhel} > 8
-cabal install --install-method=copy --installdir=%{buildroot}%{_bindir}
+cabal install --install-method=copy --enable-executable-stripping --installdir=%{buildroot}%{_bindir}
 %else
 for i in .cabal-sandbox/bin/*; do
 strip -s -o %{buildroot}%{_bindir}/$(basename $i) $i
