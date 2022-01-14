@@ -10,7 +10,7 @@
 %global debug_package %{nil}
 
 Name:           koji-tool
-Version:        0.6
+Version:        0.6.1
 Release:        1%{?dist}
 Summary:        Koji CLI tool for querying tasks and installing builds
 
@@ -29,6 +29,7 @@ BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-directory-devel
 BuildRequires:  ghc-extra-devel
 BuildRequires:  ghc-filepath-devel
+#BuildRequires:  ghc-format-numbers-devel
 BuildRequires:  ghc-http-directory-devel
 BuildRequires:  ghc-koji-devel
 BuildRequires:  ghc-pretty-simple-devel
@@ -49,7 +50,7 @@ BuildRequires:  zlib-devel
 
 %description
 Koji-tool is a CLI interface to Koji with commands to query tasks, install
-rpms, and check buildlog sizes.
+rpms, and track buildlog sizes.
 
 Koji is the RPM-based buildsystem of Fedora Linux and CentOS.
 
@@ -101,5 +102,11 @@ mkdir -p %{buildroot}%{_datadir}/bash-completion/completions/
 
 
 %changelog
+* Fri Jan 14 2022 Jens Petersen <petersen@redhat.com> - 0.6.1-1
+- install --list: now lists the rpms of a unique nvr
+- install --list: new --latest option which only finds the latest build
+- install --nv: now actually looks for N-V nor N-V-R
+- install --exclude: don't exclude subpackage when a rpm package matches
+
 * Thu Jan 13 2022 Jens Petersen <petersen@redhat.com> - 0.6-1
 - new package derived from koji-install, koji-query and koji-progress
