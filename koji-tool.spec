@@ -10,7 +10,7 @@
 %global debug_package %{nil}
 
 Name:           koji-tool
-Version:        0.6.1
+Version:        0.7
 Release:        1%{?dist}
 Summary:        Koji CLI tool for querying tasks and installing builds
 
@@ -86,12 +86,6 @@ mkdir -p %{buildroot}%{_datadir}/bash-completion/completions/
 # End cabal-rpm install
 
 
-%check
-%if %{with tests}
-%cabal_test
-%endif
-
-
 %files
 # Begin cabal-rpm files:
 %license LICENSE
@@ -102,6 +96,13 @@ mkdir -p %{buildroot}%{_datadir}/bash-completion/completions/
 
 
 %changelog
+* Wed Jan 26 2022 Jens Petersen <petersen@redhat.com> - 0.7-1
+- query: new options: '--package' to search recent builds and '--latest'
+- query --method: now defaults to buildArch (use 'any' to include all)
+- query: now defaults to "--before now" (instead of "--from today 00:00")
+- query --arch: map i686 to i386 and armv7hl to armhfp
+- query: do not drop tasks without string request
+
 * Fri Jan 14 2022 Jens Petersen <petersen@redhat.com> - 0.6.1-1
 - install --list: now lists the rpms of a unique nvr
 - install --list: new --latest option which only finds the latest build
